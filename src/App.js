@@ -6,7 +6,7 @@ function App() {
     <>
       {/* <Navbars /> */}
       <Container className='pt-2'>
-        <div className='m-1 mt-4 pt-5'>
+        <div className='m-1 mt-4 pt-4'>
           <Card>
             <Card.Body>
               <Card.Title className='d-flex justify-content-center'>

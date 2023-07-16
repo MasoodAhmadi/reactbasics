@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Modal, Card, Row, InputGroup } from 'react-bootstrap';
 
-export const TeamModal = ({ show, handleClose }) => {
+export const TeamModal = ({ show, handleClose, setName, name }) => {
   return (
     <>
       <Modal show={show} onHide={handleClose} centered>
@@ -14,6 +14,8 @@ export const TeamModal = ({ show, handleClose }) => {
             <Card.Text>
               <InputGroup className='mb-3'>
                 <Form.Control
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   placeholder='type a team name...'
                   aria-label='teamname'
                   aria-describedby='basic-addon1'

@@ -8,7 +8,7 @@ import embeddedFlag from '../pngegg.png';
 import useWindowSize from '../use-window-dimentions.hook';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { TeamModal } from './modal';
-import generate from './screenshot';
+// import generate from './screenshot';
 
 const initialValue = {
   playername: '',
@@ -17,34 +17,45 @@ const initialValue = {
 
 function ScoreBoard() {
   const history = useHistory();
-  const size = useWindowSize();
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
   const [items, setItems] = useState(initialValue);
   const [name, setName] = useState(items.teamname);
   const [palyname, setPlayerName] = useState('');
-  // const [name, setName] = useState(() => {
-  //   const savedState = JSON.parse(localStorage.getItem('items'));
-  //   console.log('savedState', savedState.name);
-  //   // const notes = JSON.parse(savedState);
-  //   // return notes || '';
-  // });
+  const [notes, setNotes] = useState(() => {
+    const savedState = localStorage.getItem('stateString');
+    const notes = JSON.parse(savedState);
+    return notes || [];
+  });
 
   useEffect(() => {
-    localStorage.setItem('items', JSON.stringify(items));
-  }, [items]);
-
+    localStorage.setItem('stateString', JSON.stringify(notes));
+  }, [notes]);
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('items'));
-    // console.log('itddddems', items);
+    const items = JSON.parse(localStorage.getItem('stateString'));
     if (items) {
       setItems(items);
     }
   }, []);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  // console.log('items', items);
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('stateString'));
+    if (items) {
+      setItems(items);
+    }
+  }, []);
+  const updateNotes = (event) => {
+    event.preventDefault();
+    var newNotes = notes.slice();
+    newNotes.push(palyname);
+    setPlayerName('');
+    setNotes(newNotes);
+  };
+
+  const notesList = notes.map((note) => note);
+  console.log('notesList', notesList);
   // console.log('name', name);
   return (
     <div>
@@ -72,7 +83,9 @@ function ScoreBoard() {
               <Card.Text>
                 <InputGroup className='mb-3'>
                   <Form.Control
-                    onChange={(e) => setPlayerName(e.target.value)}
+                    onChange={(event) => {
+                      setPlayerName(event.target.value);
+                    }}
                     value={palyname}
                     placeholder='playername'
                     aria-label='playername'
@@ -80,7 +93,9 @@ function ScoreBoard() {
                   />
                 </InputGroup>
               </Card.Text>
-              <Button variant='primary'>Add player</Button>
+              <Button variant='primary' onClick={updateNotes}>
+                Add player
+              </Button>
               {/* <Button
                 variant='primary'
                 onClick={() => {
@@ -93,101 +108,6 @@ function ScoreBoard() {
           </Card.Body>
         </Card>
 
-        <>
-          <div className='m-1 mt-2 pt-2'>
-            <Card>
-              <Card.Body>
-                <Card.Title className='d-flex justify-content-center'>
-                  <h3 style={{ textTransform: 'uppercase' }}>screenshoot</h3>
-                </Card.Title>
-                {size.width <= 390 ? (
-                  <>
-                    <Card
-                      style={{
-                        border: 'none',
-                        boxShadow:
-                          'rgba(0, 0, 0, 0.25) 0px 54px 55px rgba(0, 0, 0, 0.12) 0px -12px 30px rgba(0, 0, 0, 0.12) 0px 4px 6px rgba(0, 0, 0, 0.17) 0px 12px 13px rgba(0, 0, 0, 0.09) 0px -3px 5px;',
-                      }}
-                    >
-                      <Row>
-                        <Col style={{ backgroundColor: '#fff' }}>
-                          <div className='d-flex align-items-center flex-column gap-4'>
-                            <Card
-                              style={{
-                                backgroundColor: 'black',
-                                height: '2rem',
-                                width: '89%',
-
-                                boxShadow: 'rgba(0, 0, 0, 1) 0px 15px 25px',
-                              }}
-                            >
-                              <span style={{ color: '#fff' }}>
-                                <div className=''>
-                                  <div className='position-absolute top-50 start-50 translate-middle'>
-                                    <img
-                                      onClick={() => {
-                                        generate();
-                                      }}
-                                      className=''
-                                      alt='embedded-flag'
-                                      src={embeddedFlag}
-                                      height={size.width <= 390 ? 30 : 300}
-                                    />
-                                  </div>
-                                </div>
-                              </span>
-                            </Card>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </>
-                ) : (
-                  <>
-                    {' '}
-                    <Card
-                      style={{
-                        border: 'none',
-                        boxShadow:
-                          'rgba(0, 0, 0, 0.25) 0px 54px 55px rgba(0, 0, 0, 0.12) 0px -12px 30px rgba(0, 0, 0, 0.12) 0px 4px 6px rgba(0, 0, 0, 0.17) 0px 12px 13px rgba(0, 0, 0, 0.09) 0px -3px 5px;',
-                      }}
-                    >
-                      <Row>
-                        <Col style={{ backgroundColor: '#fff' }}>
-                          <div className='d-flex align-items-center flex-column gap-4'>
-                            <Card
-                              style={{
-                                backgroundColor: 'black',
-                                height: '30rem',
-                                width: '100%',
-
-                                boxShadow: 'rgba(0, 0, 0, 1) 0px 15px 25px',
-                              }}
-                            >
-                              <span style={{ color: '#fff' }}>
-                                <div className=''>
-                                  <div className='position-absolute top-50 start-50 translate-middle'>
-                                    <img
-                                      className=''
-                                      onClick={() => history.push('/scores')}
-                                      alt='embedded-flag'
-                                      src={embeddedFlag}
-                                      height={size.width <= 364 ? 90 : 300}
-                                    />
-                                  </div>
-                                </div>
-                              </span>
-                            </Card>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </>
-                )}
-              </Card.Body>
-            </Card>
-          </div>
-        </>
         <Card>
           <table class='table table-bordered'>
             <thead>
@@ -201,19 +121,19 @@ function ScoreBoard() {
             </thead>
             <tbody>
               <tr className='text-center text-bold'>
-                <th scope='row'>masood</th>
+                <th scope='row'>{notesList}</th>
                 <th scope='row'>0</th>
                 <th scope='row'>0</th>
                 <th scope='row'>0</th>
                 <th scope='row'>0</th>
               </tr>
-              <tr className='text-center text-bold'>
+              {/* <tr className='text-center text-bold'>
                 <th scope='row'>ahmad</th>
                 <th scope='row'>0</th>
                 <th scope='row'>0</th>
                 <th scope='row'>0</th>
                 <th scope='row'>0</th>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </Card>

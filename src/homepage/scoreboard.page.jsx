@@ -3,7 +3,7 @@ import { Button, Form, InputGroup, Row } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { PlusSquare } from 'react-bootstrap-icons';
+import { App, PlusSquare } from 'react-bootstrap-icons';
 import { TeamModal } from './modal';
 // import generate from './screenshot';
 
@@ -27,6 +27,34 @@ function ScoreBoard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
+  const [countSix, setCountSix] = useState(() => {
+    const savedState = localStorage.getItem('sixRuns');
+    const notes = JSON.parse(savedState);
+    return notes || 0;
+  });
+  const [countFour, setCountFour] = useState(() => {
+    const savedState = localStorage.getItem('fourRuns');
+    const notes = JSON.parse(savedState);
+    return notes || 0;
+  });
+
+  const [countTwo, setCountTwo] = useState(() => {
+    const savedState = localStorage.getItem('twoRuns');
+    const notes = JSON.parse(savedState);
+    return notes || 0;
+  });
+  const [count, setCount] = useState(() => {
+    const savedState = localStorage.getItem('oneRuns');
+    const notes = JSON.parse(savedState);
+    return notes || 0;
+  });
+
+  const [totalScore, setTotalScore] = useState(() => {
+    const savedState = localStorage.getItem('totalScore');
+    const notes = JSON.parse(savedState);
+    return notes || '';
+  });
+
   const [teamName, setTeamName] = useState(() => {
     const savedState = localStorage.getItem('teamName');
     const notes = JSON.parse(savedState);
@@ -34,18 +62,57 @@ function ScoreBoard() {
   });
 
   const [items, setItems] = useState(highScores);
+  //count six runs
+  useEffect(() => {
+    localStorage.setItem('sixRuns', JSON.stringify(countSix));
+  }, [countSix]);
+
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('sixRuns'));
+  }, []);
+
+  //count fours
+  useEffect(() => {
+    localStorage.setItem('fourRuns', JSON.stringify(countFour));
+  }, [countFour]);
+
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('fourRuns'));
+  }, []);
+
+  //count twos
+  useEffect(() => {
+    localStorage.setItem('twoRuns', JSON.stringify(countTwo));
+  }, [countTwo]);
+
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('twoRuns'));
+  }, []);
+
+  //count ones
+  useEffect(() => {
+    localStorage.setItem('oneRuns', JSON.stringify(count));
+  }, [count]);
+
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('oneRuns'));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('totalScore', JSON.stringify(totalScore));
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('teamName', JSON.stringify(teamName));
   }, [teamName]);
 
-  useEffect(() => {
-    localStorage.setItem('highScores', JSON.stringify(highScores));
-  }, [items]);
+  // useEffect(() => {
+  //   localStorage.setItem('highScores', JSON.stringify(highScores));
+  // }, [items]);
 
-  useEffect(() => {
-    JSON.parse(localStorage.getItem('highscores'));
-  }, []);
+  // useEffect(() => {
+  //   JSON.parse(localStorage.getItem('highscores'));
+  // }, []);
 
   // const updateNotes = (event) => {
   //   event.preventDefault();
@@ -68,8 +135,26 @@ function ScoreBoard() {
   //   setChalk('');
   //   setNotes(newNotes);
   // };
-
+  const countIncrementSix = () => {
+    // Update state with incremented value
+    setCountSix(countSix + 1);
+  };
+  const countIncrementFour = () => {
+    // Update state with incremented value
+    setCountFour(countFour + 1);
+  };
+  const countIncrementTwo = () => {
+    // Update state with incremented value
+    setCountTwo(countTwo + 1);
+  };
+  const countIncrement = () => {
+    // Update state with incremented value
+    setCount(count + 1);
+  };
   console.log('items', items);
+  const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
+
+  console.log('total', Total);
   return (
     <Container>
       <Card>
@@ -128,56 +213,115 @@ function ScoreBoard() {
         <tbody>
           <tr className='text-center text-bold'>
             <th scope='row'>masood</th>
-            <th scope='row'>0</th>
-            <th scope='row'>0</th>
-            <th scope='row'>0</th>
-            <th scope='row'>0</th>
+            <th scope='row' onClick={countIncrementSix}>
+              {' '}
+              <Button
+                variant='none'
+                style={{
+                  width: '100%',
+
+                  boxShadow:
+                    'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                }}
+              >
+                {countSix}
+              </Button>
+            </th>
+            <th scope='row' onClick={countIncrementFour}>
+              {' '}
+              <Button
+                variant='none'
+                style={{
+                  width: '100%',
+                  boxShadow:
+                    'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                }}
+              >
+                {countFour}
+              </Button>
+            </th>
+            <th scope='row' onClick={countIncrementTwo}>
+              <Button
+                variant='none'
+                style={{
+                  width: '100%',
+                  boxShadow:
+                    'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                }}
+              >
+                {countTwo}
+              </Button>
+            </th>
+            <th scope='row' onClick={countIncrement}>
+              <Button
+                variant='none'
+                style={{
+                  width: '100%',
+                  boxShadow:
+                    'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                }}
+              >
+                {' '}
+                {count}
+              </Button>
+            </th>
           </tr>
         </tbody>
       </table>
       <br />
       <br />
       <br />
-      <table className='table table-bordered'>
-        <thead>
-          <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>First</th>
-            <th scope='col'>Last</th>
-            <th scope='col'>Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
-      <Button
-        onClick={() => history.push('/')}
-        variant='primary'
-        style={{
-          width: '100%',
-          backgroundColor: 'red',
-          border: 'none',
-        }}
-      >
-        go back
-      </Button>
+      <Card style={{ border: 'none' }}>
+        <table className='table table-bordered'>
+          <thead>
+            <tr>
+              <th
+                scope='col'
+                className='d-flex justify-content-center'
+                style={{ textTransform: 'uppercase' }}
+              >
+                Total score:
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th className='d-flex justify-content-center'>
+                <h3>{Total}</h3>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </Card>
+      <div className='d-flex gap-2 mt-3'>
+        <Button
+          onClick={() => history.push('/')}
+          variant='primary'
+          style={{
+            width: '100%',
+            backgroundColor: 'red',
+            border: 'none',
+          }}
+        >
+          go back
+        </Button>
+        <br />
+        <br />
+
+        <Button
+          onClick={() => {
+            localStorage.clear() || window.location.reload();
+          }}
+          variant='primary'
+          style={{
+            width: '100%',
+            backgroundColor: 'gray',
+            border: 'none',
+          }}
+        >
+          clear
+        </Button>
+      </div>
     </Container>
   );
 }

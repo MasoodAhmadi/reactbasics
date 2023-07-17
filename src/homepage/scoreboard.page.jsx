@@ -3,7 +3,7 @@ import { Button, Form, InputGroup, Row } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { App, PlusSquare } from 'react-bootstrap-icons';
+import { App, PlusSquare, DashCircleDotted } from 'react-bootstrap-icons';
 import { TeamModal } from './modal';
 // import generate from './screenshot';
 
@@ -27,6 +27,7 @@ function ScoreBoard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
+  const [deactive, setDeactive] = useState(false);
   const [countSix, setCountSix] = useState(() => {
     const savedState = localStorage.getItem('sixRuns');
     const notes = JSON.parse(savedState);
@@ -220,62 +221,106 @@ function ScoreBoard() {
               <th scope='col'>4</th>
               <th scope='col'>2</th>
               <th scope='col'>1</th>
+              <th scope='col'></th>
             </tr>
           </thead>
           <tbody>
             <tr className='text-center text-bold'>
-              <th scope='row'>masood</th>
-              <th scope='row' onClick={countIncrementSix}>
-                {' '}
-                <Button
-                  variant='none'
-                  style={{
-                    width: '100%',
-
-                    boxShadow:
-                      'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                  }}
-                >
-                  {countSix}
-                </Button>
-              </th>
-              <th scope='row' onClick={countIncrementFour}>
-                {' '}
-                <Button
-                  variant='none'
-                  style={{
-                    width: '100%',
-                    boxShadow:
-                      'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                  }}
-                >
-                  {countFour}
-                </Button>
-              </th>
-              <th scope='row' onClick={countIncrementTwo}>
-                <Button
-                  variant='none'
-                  style={{
-                    width: '100%',
-                    boxShadow:
-                      'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                  }}
-                >
-                  {countTwo}
-                </Button>
-              </th>
-              <th scope='row' onClick={countIncrement}>
-                <Button
-                  variant='none'
-                  style={{
-                    width: '100%',
-                    boxShadow:
-                      'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                  }}
+              <>
+                <th scope='row'>masood</th>
+                <th
+                  scope='row'
+                  onClick={deactive === false ? countIncrementSix : null}
                 >
                   {' '}
-                  {count}
-                </Button>
+                  <Button
+                    disabled={deactive === true ? true : false}
+                    className={`${
+                      deactive === true ? 'text-decoration-line-through' : ''
+                    }`}
+                    variant='none'
+                    style={{
+                      width: '100%',
+                      boxShadow:
+                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                    }}
+                  >
+                    {countSix}
+                  </Button>
+                </th>
+                <th
+                  scope='row'
+                  onClick={deactive === false ? countIncrementFour : null}
+                >
+                  {' '}
+                  <Button
+                    disabled={deactive === true ? true : false}
+                    className={`${
+                      deactive === true ? 'text-decoration-line-through' : ''
+                    }`}
+                    variant='none'
+                    style={{
+                      width: '100%',
+                      boxShadow:
+                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                    }}
+                  >
+                    {countFour}
+                  </Button>
+                </th>
+                <th
+                  scope='row'
+                  onClick={deactive === false ? countIncrementTwo : null}
+                >
+                  <Button
+                    disabled={deactive === true ? true : false}
+                    className={`${
+                      deactive === true
+                        ? 'text-decoration-line-through text-red'
+                        : ''
+                    }`}
+                    variant='none'
+                    style={{
+                      width: '100%',
+                      boxShadow:
+                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                    }}
+                  >
+                    {countTwo}
+                  </Button>
+                </th>
+                <th
+                  scope='row'
+                  onClick={deactive === false ? countIncrement : null}
+                >
+                  <Button
+                    disabled={deactive === true ? true : false}
+                    className={`${
+                      deactive === true ? 'text-decoration-line-through' : ''
+                    }`}
+                    variant='none'
+                    style={{
+                      width: '100%',
+                      boxShadow:
+                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                    }}
+                  >
+                    {' '}
+                    {count}
+                  </Button>
+                </th>
+              </>
+              <th scope='row' onClick={() => setDeactive(true)}>
+                <DashCircleDotted
+                  size={25}
+                  style={{
+                    color: 'red',
+                    border: 'none',
+                  }}
+                />
+
+                {/* {' '}
+                </DashCircleDotted> */}
               </th>
             </tr>
           </tbody>

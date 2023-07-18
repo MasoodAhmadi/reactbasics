@@ -3,7 +3,13 @@ import { Button, Form, InputGroup, Row } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { App, PlusSquare, DashCircleDotted } from 'react-bootstrap-icons';
+import {
+  App,
+  PlusSquare,
+  DashCircleDotted,
+  Plus,
+  Dash,
+} from 'react-bootstrap-icons';
 import { TeamModal } from './modal';
 // import generate from './screenshot';
 
@@ -28,6 +34,14 @@ function ScoreBoard() {
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
   const [deactive, setDeactive] = useState(false);
+  const [chalk, setChalk] = useState('');
+  const [notes, setNotes] = useState(() => {
+    const savedState = localStorage.getItem('stateString');
+    const notes = JSON.parse(savedState);
+    return notes || [];
+  });
+  const [items, setItems] = useState(highScores);
+
   const [countSix, setCountSix] = useState(() => {
     const savedState = localStorage.getItem('sixRuns');
     const notes = JSON.parse(savedState);
@@ -50,19 +64,14 @@ function ScoreBoard() {
     return notes || 0;
   });
 
-  const [totalScore, setTotalScore] = useState(() => {
-    const savedState = localStorage.getItem('totalScore');
-    const notes = JSON.parse(savedState);
-    return notes || '';
-  });
-
   const [teamName, setTeamName] = useState(() => {
     const savedState = localStorage.getItem('teamName');
     const notes = JSON.parse(savedState);
     return notes || '';
   });
-
-  const [items, setItems] = useState(highScores);
+  useEffect(() => {
+    localStorage.setItem('stateString', JSON.stringify(notes));
+  }, [notes]);
   //count six runs
   useEffect(() => {
     localStorage.setItem('sixRuns', JSON.stringify(countSix));
@@ -100,42 +109,9 @@ function ScoreBoard() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('totalScore', JSON.stringify(totalScore));
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem('teamName', JSON.stringify(teamName));
   }, [teamName]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('highScores', JSON.stringify(highScores));
-  // }, [items]);
-
-  // useEffect(() => {
-  //   JSON.parse(localStorage.getItem('highscores'));
-  // }, []);
-
-  // const updateNotes = (event) => {
-  //   event.preventDefault();
-  //   // var newNotes = notes.slice();
-  //   if (palyname === '') {
-  //     return;
-  //   } else {
-  //     setNotes(palyname);
-  //     // newNotes.push(palyname);
-  //   }
-  // };
-
-  // const updateChalk = (event) => {
-  //   setChalk(event.target.value);
-  // };
-  // const updateNotes2 = (event) => {
-  //   event.preventDefault();
-  //   var newNotes = notes.slice();
-  //   newNotes.push(chalk);
-  //   setChalk('');
-  //   setNotes(newNotes);
-  // };
   const countIncrementSix = () => {
     // Update state with incremented value
     setCountSix(countSix + 1);
@@ -154,8 +130,17 @@ function ScoreBoard() {
   };
   console.log('items', items);
   const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
+  const updateNotes2 = (event) => {
+    event.preventDefault();
+    var newNotes = notes.slice();
+    newNotes.push(chalk);
+    setChalk('');
+    setNotes(newNotes);
+  };
 
-  console.log('total', Total);
+  const notesList = notes.map((note) => <>{note}</>);
+
+  console.log('notesList', notesList);
   return (
     <Container>
       <Card
@@ -176,23 +161,23 @@ function ScoreBoard() {
               setName={setTeamName}
             />
           </Card.Title>
-          <br />
-          <br />
           <Row>
             <Card.Text>
-              <InputGroup className='mb-3'>
+              <InputGroup className='mb-1'>
                 <Form.Control
                   onChange={(event) => {
-                    setItems(event.target.value);
+                    setChalk(event.target.value);
                   }}
-                  value={items.name}
+                  value={chalk}
                   placeholder='playername'
                   aria-label='playername'
                   aria-describedby='basic-addon1'
                 />
               </InputGroup>
             </Card.Text>
-            <Button variant='primary'>Add player</Button>
+            <Button variant='primary' onClick={updateNotes2}>
+              Add player
+            </Button>
             {/* <Button
                 variant='primary'
                 onClick={() => {
@@ -225,104 +210,106 @@ function ScoreBoard() {
             </tr>
           </thead>
           <tbody>
-            <tr className='text-center text-bold'>
-              <>
-                <th scope='row'>masood</th>
-                <th
-                  scope='row'
-                  onClick={deactive === false ? countIncrementSix : null}
-                >
-                  {' '}
-                  <Button
-                    disabled={deactive === true ? true : false}
-                    className={`${
-                      deactive === true ? 'text-decoration-line-through' : ''
-                    }`}
-                    variant='none'
-                    style={{
-                      width: '100%',
-                      boxShadow:
-                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                    }}
-                  >
-                    {countSix}
-                  </Button>
-                </th>
-                <th
-                  scope='row'
-                  onClick={deactive === false ? countIncrementFour : null}
-                >
-                  {' '}
-                  <Button
-                    disabled={deactive === true ? true : false}
-                    className={`${
-                      deactive === true ? 'text-decoration-line-through' : ''
-                    }`}
-                    variant='none'
-                    style={{
-                      width: '100%',
-                      boxShadow:
-                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                    }}
-                  >
-                    {countFour}
-                  </Button>
-                </th>
-                <th
-                  scope='row'
-                  onClick={deactive === false ? countIncrementTwo : null}
-                >
-                  <Button
-                    disabled={deactive === true ? true : false}
-                    className={`${
-                      deactive === true
-                        ? 'text-decoration-line-through text-red'
-                        : ''
-                    }`}
-                    variant='none'
-                    style={{
-                      width: '100%',
-                      boxShadow:
-                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                    }}
-                  >
-                    {countTwo}
-                  </Button>
-                </th>
-                <th
-                  scope='row'
-                  onClick={deactive === false ? countIncrement : null}
-                >
-                  <Button
-                    disabled={deactive === true ? true : false}
-                    className={`${
-                      deactive === true ? 'text-decoration-line-through' : ''
-                    }`}
-                    variant='none'
-                    style={{
-                      width: '100%',
-                      boxShadow:
-                        'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
-                    }}
+            {notes.map((note) => (
+              <tr className='text-center text-bold'>
+                <>
+                  <th scope='row'>{note}</th>
+                  <th
+                    scope='row'
+                    onClick={deactive === false ? countIncrementSix : null}
                   >
                     {' '}
-                    {count}
-                  </Button>
-                </th>
-              </>
-              <th scope='row' onClick={() => setDeactive(true)}>
-                <DashCircleDotted
-                  size={25}
-                  style={{
-                    color: 'red',
-                    border: 'none',
-                  }}
-                />
+                    <Button
+                      disabled={deactive === true ? true : false}
+                      className={`${
+                        deactive === true ? 'text-decoration-line-through' : ''
+                      }`}
+                      variant='none'
+                      style={{
+                        width: '100%',
+                        boxShadow:
+                          'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                      }}
+                    >
+                      {countSix}
+                    </Button>
+                  </th>
+                  <th
+                    scope='row'
+                    onClick={deactive === false ? countIncrementFour : null}
+                  >
+                    {' '}
+                    <Button
+                      disabled={deactive === true ? true : false}
+                      className={`${
+                        deactive === true ? 'text-decoration-line-through' : ''
+                      }`}
+                      variant='none'
+                      style={{
+                        width: '100%',
+                        boxShadow:
+                          'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                      }}
+                    >
+                      {countFour}
+                    </Button>
+                  </th>
+                  <th
+                    scope='row'
+                    onClick={deactive === false ? countIncrementTwo : null}
+                  >
+                    <Button
+                      disabled={deactive === true ? true : false}
+                      className={`${
+                        deactive === true
+                          ? 'text-decoration-line-through text-red'
+                          : ''
+                      }`}
+                      variant='none'
+                      style={{
+                        width: '100%',
+                        boxShadow:
+                          'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                      }}
+                    >
+                      {countTwo}
+                    </Button>
+                  </th>
+                  <th
+                    scope='row'
+                    onClick={deactive === false ? countIncrement : null}
+                  >
+                    <Button
+                      disabled={deactive === true ? true : false}
+                      className={`${
+                        deactive === true ? 'text-decoration-line-through' : ''
+                      }`}
+                      variant='none'
+                      style={{
+                        width: '100%',
+                        boxShadow:
+                          'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset',
+                      }}
+                    >
+                      {' '}
+                      {count}
+                    </Button>
+                  </th>
+                </>
+                <th scope='row' onClick={() => setDeactive(true)}>
+                  <DashCircleDotted
+                    size={25}
+                    style={{
+                      color: 'red',
+                      border: 'none',
+                    }}
+                  />
 
-                {/* {' '}
+                  {/* {' '}
                 </DashCircleDotted> */}
-              </th>
-            </tr>
+                </th>
+              </tr>
+            ))}
           </tbody>
         </table>
       </Card>
@@ -351,8 +338,24 @@ function ScoreBoard() {
           </thead>
           <tbody>
             <tr>
-              <th className='d-flex justify-content-center'>
-                <h3>{Total}</h3>
+              <th className='d-flex justify-content-between'>
+                <>
+                  <div
+                    style={{
+                      boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+                    }}
+                  >
+                    <Plus size={25} />
+                  </div>
+                  <h3>{Total}</h3>
+                  <div
+                    style={{
+                      boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+                    }}
+                  >
+                    <Dash size={25} />
+                  </div>
+                </>
               </th>
             </tr>
           </tbody>

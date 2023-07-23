@@ -1,5 +1,4 @@
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-
 import embeddedFlag from '../pngegg.png';
 import useWindowSize from '../use-window-dimentions.hook';
 import { useHistory } from 'react-router-dom';

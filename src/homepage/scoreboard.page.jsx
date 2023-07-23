@@ -4,17 +4,14 @@ import { Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { PlusSquare, DashCircleDotted } from 'react-bootstrap-icons';
-import { TeamModal } from './modal';
 import Overs from './overs.';
-import Totals from './total';
-// import generate from './screenshot';
+import Total from './Total';
 
 function ScoreBoard() {
   const history = useHistory();
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
   const [deactive, setDeactive] = useState(false);
   const [chalk, setChalk] = useState('');
   const [notes, setNotes] = useState(() => {
@@ -50,11 +47,11 @@ function ScoreBoard() {
     return notes || 0;
   });
 
-  const [teamName, setTeamName] = useState(() => {
-    const savedState = localStorage.getItem('teamName');
-    const notes = JSON.parse(savedState);
-    return notes || '';
-  });
+  // const [teamName, setTeamName] = useState(() => {
+  //   const savedState = localStorage.getItem('teamName');
+  //   const notes = JSON.parse(savedState);
+  //   return notes || '';
+  // });
   useEffect(() => {
     localStorage.setItem('stateString', JSON.stringify(notes));
   }, [notes]);
@@ -101,17 +98,15 @@ function ScoreBoard() {
     JSON.parse(localStorage.getItem('oneRuns'));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('teamName', JSON.stringify(teamName));
-  }, [teamName]);
+  // useEffect(() => {
+  //   localStorage.setItem('teamName', JSON.stringify(teamName));
+  // }, [teamName]);
 
   const countIncrementSix = () => {
-    // Update state with incremented value
     setCountSix(countSix + 1);
     window.location.reload();
   };
   const countIncrementFour = () => {
-    // Update state with incremented value
     setCountFour(countFour + 1);
     window.location.reload();
   };
@@ -178,17 +173,6 @@ function ScoreBoard() {
                 </Button>
               </div>
             </Card.Text>
-            {/* <Button variant='primary' onClick={updateNotes2}>
-              Add player
-            </Button> */}
-            {/* <Button
-                variant='primary'
-                onClick={() => {
-                  generate();
-                }}
-              >
-                screenshoot
-              </Button> */}
           </Row>
         </Card.Body>
       </Card>
@@ -327,7 +311,7 @@ function ScoreBoard() {
             'rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px',
         }}
       >
-        <Totals
+        <Total
           countSix={countSix}
           countFour={countFour}
           countTwo={countTwo}

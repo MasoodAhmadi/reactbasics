@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Dash, Plus } from 'react-bootstrap-icons';
 
-export default function Totals({ countSix, countFour, countTwo, count }) {
+export default function Total({ countSix, countFour, countTwo, count }) {
   // const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
 
   // const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
@@ -13,7 +13,7 @@ export default function Totals({ countSix, countFour, countTwo, count }) {
     setData(data + 1);
   };
   const decrementTotal = () => {
-    setData(data + 1);
+    setData(data - 1);
   };
   useEffect(() => {
     (async () => {
@@ -21,6 +21,7 @@ export default function Totals({ countSix, countFour, countTwo, count }) {
       const result = Total;
       setData(result);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // window.location.reload();
   console.log('totalCount', data);

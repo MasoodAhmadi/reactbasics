@@ -11,6 +11,7 @@ import {
   Dash,
 } from 'react-bootstrap-icons';
 import { TeamModal } from './modal';
+import Overs from './overs.';
 // import generate from './screenshot';
 
 const highScores = [
@@ -47,6 +48,11 @@ function ScoreBoard() {
     const notes = JSON.parse(savedState);
     return notes || 0;
   });
+  const [countOver, setCountOver] = useState(() => {
+    const savedState = localStorage.getItem('overs');
+    const notes = JSON.parse(savedState);
+    return notes || 0;
+  });
   const [countFour, setCountFour] = useState(() => {
     const savedState = localStorage.getItem('fourRuns');
     const notes = JSON.parse(savedState);
@@ -79,6 +85,13 @@ function ScoreBoard() {
 
   useEffect(() => {
     JSON.parse(localStorage.getItem('sixRuns'));
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('overs', JSON.stringify(countOver));
+  }, [countOver]);
+
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('overs'));
   }, []);
 
   //count fours
@@ -360,6 +373,9 @@ function ScoreBoard() {
             </tr>
           </tbody>
         </table>
+      </Card>
+      <Card>
+        <Overs countOver={countOver} setCountOver={setCountOver} />
       </Card>
       <div className='d-flex gap-2 mt-3'>
         <Button

@@ -15,7 +15,7 @@ export default function Homepage() {
               <Card.Title className='d-flex justify-content-center'>
                 <h3 style={{ textTransform: 'uppercase' }}>Afghanistan</h3>
               </Card.Title>
-              {size.width <= 390 ? (
+              {size.width <= 643 ? (
                 <>
                   <Card
                     style={{
@@ -68,7 +68,7 @@ export default function Homepage() {
                                     className=''
                                     alt='embedded-flag'
                                     src={embeddedFlag}
-                                    height={size.width <= 390 ? 90 : 300}
+                                    height={size.width <= 643 ? 90 : 300}
                                   />
                                 </div>
                               </div>
@@ -138,7 +138,7 @@ export default function Homepage() {
                           >
                             <span style={{ color: '#fff' }}></span>
                           </Card>
-                          <Button
+                          {/* <Button
                             variant='primary'
                             style={{
                               width: '100%',
@@ -147,7 +147,7 @@ export default function Homepage() {
                             }}
                           >
                             Cities
-                          </Button>
+                          </Button> */}
                         </div>
                       </Col>
                       <Col style={{ backgroundColor: '#fff' }}>
@@ -168,13 +168,13 @@ export default function Homepage() {
                                     className=''
                                     alt='embedded-flag'
                                     src={embeddedFlag}
-                                    height={size.width <= 364 ? 90 : 300}
+                                    height={size.width <= 643 ? 90 : 300}
                                   />
                                 </div>
                               </div>
                             </span>
                           </Card>
-                          <Button
+                          {/* <Button
                             variant='primary'
                             style={{
                               width: '100%',
@@ -183,7 +183,7 @@ export default function Homepage() {
                             }}
                           >
                             Cities
-                          </Button>
+                          </Button> */}
                         </div>
                       </Col>
                       <Col style={{ backgroundColor: '#fff' }}>
@@ -199,7 +199,7 @@ export default function Homepage() {
                             <span style={{ color: '#fff' }}></span>
                           </Card>
 
-                          <Button
+                          {/* <Button
                             variant='primary'
                             style={{
                               width: '100%',
@@ -208,7 +208,7 @@ export default function Homepage() {
                             }}
                           >
                             Cities
-                          </Button>
+                          </Button> */}
                         </div>
                       </Col>
                     </Row>
@@ -227,7 +227,7 @@ export default function Homepage() {
                 <Card.Title className='d-flex justify-content-center'>
                   <h3 style={{ textTransform: 'uppercase' }}>Score board</h3>
                 </Card.Title>
-                {size.width <= 390 ? (
+                {size.width <= 643 ? (
                   <>
                     <Card
                       style={{
@@ -281,7 +281,7 @@ export default function Homepage() {
                                       className=''
                                       alt='embedded-flag'
                                       src={embeddedFlag}
-                                      height={size.width <= 390 ? 90 : 300}
+                                      height={size.width <= 643 ? 90 : 300}
                                     />
                                   </div>
                                 </div>
@@ -322,7 +322,7 @@ export default function Homepage() {
                                       onClick={() => history.push('/scores')}
                                       alt='embedded-flag'
                                       src={embeddedFlag}
-                                      height={size.width <= 364 ? 90 : 300}
+                                      height={size.width <= 643 ? 90 : 300}
                                     />
                                   </div>
                                 </div>

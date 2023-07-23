@@ -189,10 +189,10 @@ function ScoreBoard() {
           <thead>
             <tr className='text-center text-bold table-active'>
               <th scope='col'>Team Name:</th>
-              <th scope='col'>6</th>
-              <th scope='col'>4</th>
-              <th scope='col'>2</th>
-              <th scope='col'>1</th>
+              <th scope='col'>6s</th>
+              <th scope='col'>4s</th>
+              <th scope='col'>2s</th>
+              <th scope='col'>1s</th>
               <th scope='col'></th>
             </tr>
           </thead>

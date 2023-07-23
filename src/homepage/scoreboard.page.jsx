@@ -3,15 +3,10 @@ import { Button, Form, InputGroup, Row } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import {
-  App,
-  PlusSquare,
-  DashCircleDotted,
-  Plus,
-  Dash,
-} from 'react-bootstrap-icons';
+import { PlusSquare, DashCircleDotted } from 'react-bootstrap-icons';
 import { TeamModal } from './modal';
 import Overs from './overs.';
+import Totals from './total';
 // import generate from './screenshot';
 
 function ScoreBoard() {
@@ -113,36 +108,32 @@ function ScoreBoard() {
   const countIncrementSix = () => {
     // Update state with incremented value
     setCountSix(countSix + 1);
+    window.location.reload();
   };
   const countIncrementFour = () => {
     // Update state with incremented value
     setCountFour(countFour + 1);
+    window.location.reload();
   };
   const countIncrementTwo = () => {
     // Update state with incremented value
     setCountTwo(countTwo + 1);
+    window.location.reload();
   };
   const countIncrement = () => {
     // Update state with incremented value
     setCount(count + 1);
+    window.location.reload();
   };
-  const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
   const updateNotes2 = (event) => {
     event.preventDefault();
     var newNotes = notes.slice();
     newNotes.push(chalk);
     setChalk('');
     setNotes(newNotes);
+    window.location.reload();
   };
 
-  console.log(
-    'check',
-    notes.map((note) => (note.length < 1 ? 'true' : 'false'))
-  );
-  console.log(
-    'notes',
-    notes.map((note) => (note.length > 1 ? true : false))
-  );
   return (
     <Container>
       <Card
@@ -336,42 +327,12 @@ function ScoreBoard() {
             'rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px',
         }}
       >
-        <table className='table table-bordered'>
-          <thead>
-            <tr>
-              <th
-                scope='col'
-                className='d-flex justify-content-center'
-                style={{ textTransform: 'uppercase' }}
-              >
-                Total score:
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th className='d-flex justify-content-between'>
-                <>
-                  <div
-                    style={{
-                      boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
-                    }}
-                  >
-                    <Plus size={25} />
-                  </div>
-                  <h3>{Total}</h3>
-                  <div
-                    style={{
-                      boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
-                    }}
-                  >
-                    <Dash size={25} />
-                  </div>
-                </>
-              </th>
-            </tr>
-          </tbody>
-        </table>
+        <Totals
+          countSix={countSix}
+          countFour={countFour}
+          countTwo={countTwo}
+          count={count}
+        />
       </Card>
       <Card>
         <Overs countOver={countOver} setCountOver={setCountOver} />

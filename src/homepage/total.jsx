@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { Dash, Plus } from 'react-bootstrap-icons';
 
-export default function Totals({ Total }) {
+export default function Totals({ countSix, countFour, countTwo, count }) {
+  // const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
+
+  // const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
+  // const [totalCount, setTotalCount] = useState([Total]);
+  const [data, setData] = useState([]);
+
+  const incrementTotal = () => {
+    setData(data + 1);
+  };
+  useEffect(() => {
+    (async () => {
+      const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
+      const result = Total;
+      setData(result);
+    })();
+  }, []);
+  // window.location.reload();
+  console.log('totalCount', data);
   return (
     <>
       <table className='table table-bordered'>
@@ -25,15 +44,23 @@ export default function Totals({ Total }) {
                     boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
                   }}
                 >
-                  <Plus size={25} onClick='' />
+                  <Button
+                    variant='none'
+                    style={{ border: 'none' }}
+                    onClick={incrementTotal}
+                  >
+                    <Plus size={25} onClick='' />
+                  </Button>
                 </div>
-                <h3>{Total}</h3>
+                <h3>{data}</h3>
                 <div
                   style={{
                     boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
                   }}
                 >
-                  <Dash size={25} />
+                  <Button variant='none' style={{ border: 'none' }}>
+                    <Dash size={25} />
+                  </Button>
                 </div>
               </>
             </th>

@@ -14,20 +14,6 @@ import { TeamModal } from './modal';
 import Overs from './overs.';
 // import generate from './screenshot';
 
-const highScores = [
-  { id: '1', name: '', score: 0 },
-  { id: '2', name: '', score: 0 },
-  { id: '3', name: '', score: 0 },
-  { id: '4', name: '', score: 0 },
-  { id: '5', name: '', score: 0 },
-  { id: '6', name: '', score: 0 },
-  { id: '7', name: '', score: 0 },
-  { id: '8', name: '', score: 0 },
-  { id: '9', name: '', score: 0 },
-  { id: '10', name: '', score: 0 },
-  { id: '11', name: '', score: 0 },
-];
-
 function ScoreBoard() {
   const history = useHistory();
 
@@ -41,7 +27,6 @@ function ScoreBoard() {
     const notes = JSON.parse(savedState);
     return notes || [];
   });
-  const [items, setItems] = useState(highScores);
 
   const [countSix, setCountSix] = useState(() => {
     const savedState = localStorage.getItem('sixRuns');
@@ -141,7 +126,6 @@ function ScoreBoard() {
     // Update state with incremented value
     setCount(count + 1);
   };
-  console.log('items', items);
   const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
   const updateNotes2 = (event) => {
     event.preventDefault();
@@ -151,9 +135,14 @@ function ScoreBoard() {
     setNotes(newNotes);
   };
 
-  const notesList = notes.map((note) => <>{note}</>);
-
-  console.log('notesList', notesList);
+  console.log(
+    'check',
+    notes.map((note) => (note.length < 1 ? 'true' : 'false'))
+  );
+  console.log(
+    'notes',
+    notes.map((note) => (note.length > 1 ? true : false))
+  );
   return (
     <Container>
       <Card
@@ -163,7 +152,7 @@ function ScoreBoard() {
         }}
       >
         <Card.Body>
-          <Card.Title className='d-flex justify-content-between'>
+          {/* <Card.Title className='d-flex justify-content-between'>
             {' '}
             <p>Team Name: {teamName}</p>
             <PlusSquare size={30} onClick={handleShow} />
@@ -173,24 +162,34 @@ function ScoreBoard() {
               name={teamName}
               setName={setTeamName}
             />
-          </Card.Title>
+          </Card.Title> */}
           <Row>
-            <Card.Text>
-              <InputGroup className='mb-1'>
+            <Card.Text className='d-flex justify-content-center'>
+              <InputGroup className='mb-0'>
                 <Form.Control
                   onChange={(event) => {
                     setChalk(event.target.value);
                   }}
                   value={chalk}
-                  placeholder='playername'
-                  aria-label='playername'
+                  placeholder='team name'
+                  aria-label='team name'
                   aria-describedby='basic-addon1'
                 />
               </InputGroup>
+
+              <div className='m-0'>
+                <Button
+                  variant='none'
+                  style={{ border: 'none' }}
+                  disabled={notes.length ? true : false}
+                >
+                  <PlusSquare size={35} onClick={updateNotes2} />
+                </Button>
+              </div>
             </Card.Text>
-            <Button variant='primary' onClick={updateNotes2}>
+            {/* <Button variant='primary' onClick={updateNotes2}>
               Add player
-            </Button>
+            </Button> */}
             {/* <Button
                 variant='primary'
                 onClick={() => {
@@ -214,7 +213,7 @@ function ScoreBoard() {
         <table className='table table-bordered'>
           <thead>
             <tr className='text-center text-bold table-active'>
-              <th scope='col'>Player name:</th>
+              <th scope='col'>Team Name:</th>
               <th scope='col'>6</th>
               <th scope='col'>4</th>
               <th scope='col'>2</th>

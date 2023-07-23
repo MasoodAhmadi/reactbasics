@@ -12,6 +12,9 @@ export default function Totals({ countSix, countFour, countTwo, count }) {
   const incrementTotal = () => {
     setData(data + 1);
   };
+  const decrementTotal = () => {
+    setData(data + 1);
+  };
   useEffect(() => {
     (async () => {
       const Total = countSix * 6 + countFour * 4 + countTwo * 2 + count * 1;
@@ -58,7 +61,11 @@ export default function Totals({ countSix, countFour, countTwo, count }) {
                     boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
                   }}
                 >
-                  <Button variant='none' style={{ border: 'none' }}>
+                  <Button
+                    variant='none'
+                    style={{ border: 'none' }}
+                    onClick={decrementTotal}
+                  >
                     <Dash size={25} />
                   </Button>
                 </div>

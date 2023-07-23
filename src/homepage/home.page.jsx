@@ -29,11 +29,11 @@ export default function Homepage() {
                         <div className='d-flex align-items-center flex-column gap-4'>
                           <Card
                             style={{
-                              backgroundColor: 'red',
+                              backgroundColor: 'black',
                               height: '10rem',
                               width: '100%',
 
-                              boxShadow: 'rgba(255, 40, 0, 1) 0px 15px 25px',
+                              boxShadow: 'rgba(0, 0, 0, 1) 0px 15px 25px',
                             }}
                           >
                             <span style={{ color: '#fff' }}></span>
@@ -54,11 +54,10 @@ export default function Homepage() {
                         <div className='d-flex align-items-center flex-column gap-4'>
                           <Card
                             style={{
-                              backgroundColor: 'black',
+                              backgroundColor: 'Red',
                               height: '10rem',
                               width: '100%',
-
-                              boxShadow: 'rgba(0, 0, 0, 1) 0px 15px 25px',
+                              boxShadow: 'rgba(255, 40, 0, 1) 0px 15px 25px',
                             }}
                           >
                             <span style={{ color: '#fff' }}>

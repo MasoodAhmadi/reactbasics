@@ -4,8 +4,8 @@ import { Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { PlusSquare, DashCircleDotted } from 'react-bootstrap-icons';
-import Overs from './overs.';
-import Total from './Total';
+import Overs from './overs';
+import Total from './total';
 
 function ScoreBoard() {
   const history = useHistory();
